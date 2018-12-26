@@ -1,0 +1,33 @@
+
+This is a scrapy project I did for learning. The spider downloads and
+scrap Brazilian Lottery's results. Each lottery results is published 
+as HTML files inside a .zip file. This project will teach you how to
+use scrapy to process .zip files, how to organize multiples pipelines
+and how to produce JSON output from Items()
+
+The URLs of each lottery and the spider code itself is defined in 
+    hacksena/spiders/hacksena_spider.py
+
+The Spider yields a FiledownloadItem(Item) defined in
+    hacksena/items.py
+
+Then 3 different pipelines are executed in a given sequence, 
+check hacksena/settings.py to see the definitions. 
+
+The sequence is:
+
+1) HacksenaPipeline(object):
+    This pipeline extract the zip file content (the HTML file),
+    returning Item() with file_data = Selector()
+
+2) ResultsPipeline(object):
+    This pipeline grab the HTML extracted previously, use the Selector() 
+    to extratec the relevant parts and returns ResultItem() 
+    in preparition to write down a JSON file
+
+3) JsonWriterPipeline(object):
+    This pipeline effective write down the JSON output                                                                                                                                               
+
+I hope you enjoy scrapy too as I am enjoying it :)
+
+Carlos.
